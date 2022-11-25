@@ -8,6 +8,7 @@ const axios = require("axios");
 const User = require("../models/User");
 
 const isAuthenticated = require("../middlewares/isAuthenticated");
+const { ObjectID, ObjectId } = require("mongodb");
 
 const url = "https://api.websitecarbon.com/site?";
 
@@ -104,6 +105,7 @@ router.put("/user/websites", isAuthenticated, async (req, res) => {
         "accept-encoding": "deflate",
       },
     });
+    response.data.website_id = ObjectId();
     user.websites.push(response.data);
     await user.save();
     res.status(201).json(user);
